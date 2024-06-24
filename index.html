@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nick Baret - Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -143,5 +144,197 @@
             });
         });
     </script>
+    <script>
+        // ... (keep the createScene function and other project animations)
+        
+        function createTinyShellScene() {
+            const container = document.getElementById('tiny-shell');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+        
+            // Create a "terminal" plane
+            const terminalGeometry = new THREE.PlaneGeometry(10, 7);
+            const terminalMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const terminal = new THREE.Mesh(terminalGeometry, terminalMaterial);
+            scene.add(terminal);
+        
+            // Create text for commands
+            const loader = new THREE.FontLoader();
+            loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
+                const commands = [
+                    "/usr/bin/cat mysplit.c | /usr/bin/grep main",
+                    "/usr/bin/ls /usr/include/gnu | /usr/bin/grep 64",
+                    "jobs",
+                    "./mystop 2",
+                    "./myint 2",
+                    "./bogus",
+                    "./myspin 10",
+                    "fg %1",
+                    "bg %3",
+                    "quit"
+                ];
+        
+                let currentCommandIndex = 0;
+                let textMesh;
+        
+                function displayNextCommand() {
+                    if (currentCommandIndex < commands.length) {
+                        const command = commands[currentCommandIndex];
+                        const textGeometry = new THREE.TextGeometry(command, {
+                            font: font,
+                            size: 0.3,
+                            height: 0.1
+                        });
+                        const textMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                        if (textMesh) scene.remove(textMesh);
+                        textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                        textMesh.position.set(-4.5, 3 - currentCommandIndex * 0.5, 0.1);
+                        scene.add(textMesh);
+                        currentCommandIndex++;
+                    }
+                }
+        
+                // Display a new command every 2 seconds
+                setInterval(displayNextCommand, 2000);
+            });
+        
+            camera.position.z = 5;
+        
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+        
+        createTinyShellScene();
+        // ... (keep other project animations)
+        </script>
+        <script>
+            // ... (keep the createTinyShellScene function)
+            
+            function createMathComponentScene() {
+                const container = document.getElementById('math-component');
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                container.appendChild(renderer.domElement);
+            
+                // Create 3D numbers and operators
+                const loader = new THREE.FontLoader();
+                loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
+                    const numbers = [2, '+', 3, '=', 5];
+                    numbers.forEach((num, index) => {
+                        const geometry = new THREE.TextGeometry(num.toString(), {
+                            font: font,
+                            size: 1,
+                            height: 0.2,
+                        });
+                        const material = new THREE.MeshPhongMaterial({color: 0x00ff00});
+                        const mesh = new THREE.Mesh(geometry, material);
+                        mesh.position.set(index * 2 - 4, 0, 0);
+                        scene.add(mesh);
+                    });
+                });
+            
+                // Add lighting
+                const light = new THREE.PointLight(0xffffff, 1, 100);
+                light.position.set(0, 0, 10);
+                scene.add(light);
+            
+                camera.position.z = 10;
+            
+                function animate() {
+                    requestAnimationFrame(animate);
+                    scene.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                }
+                animate();
+            }
+            
+            function createMallocScene() {
+                const container = document.getElementById('malloc');
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                container.appendChild(renderer.domElement);
+            
+                const memoryBlocks = [];
+                const geometry = new THREE.BoxGeometry(1, 1, 1);
+            
+                for (let i = 0; i < 10; i++) {
+                    const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff});
+                    const cube = new THREE.Mesh(geometry, material);
+                    cube.position.set(i * 1.2 - 5, 0, 0);
+                    scene.add(cube);
+                    memoryBlocks.push(cube);
+                }
+            
+                // Add lighting
+                const light = new THREE.PointLight(0xffffff, 1, 100);
+                light.position.set(0, 0, 10);
+                scene.add(light);
+            
+                camera.position.z = 10;
+            
+                function animate() {
+                    requestAnimationFrame(animate);
+                    memoryBlocks.forEach((block, index) => {
+                        block.scale.y = 0.5 + Math.sin(Date.now() * 0.001 + index) * 0.5;
+                    });
+                    renderer.render(scene, camera);
+                }
+                animate();
+            }
+            
+            function createKernelOptimizationScene() {
+                const container = document.getElementById('kernel-optimization');
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                container.appendChild(renderer.domElement);
+            
+                const geometry = new THREE.BoxGeometry(0.5, 1, 0.5);
+                const bars = [];
+            
+                for (let i = 0; i < 10; i++) {
+                    const material = new THREE.MeshPhongMaterial({color: 0x00ff00});
+                    const bar = new THREE.Mesh(geometry, material);
+                    bar.position.set(i * 0.7 - 3, 0, 0);
+                    scene.add(bar);
+                    bars.push(bar);
+                }
+            
+                // Add lighting
+                const light = new THREE.PointLight(0xffffff, 1, 100);
+                light.position.set(0, 0, 10);
+                scene.add(light);
+            
+                camera.position.z = 10;
+            
+                let time = 0;
+                function animate() {
+                    requestAnimationFrame(animate);
+                    time += 0.05;
+                    bars.forEach((bar, index) => {
+                        bar.scale.y = 1 + Math.sin(time + index * 0.5) * 0.5;
+                    });
+                    renderer.render(scene, camera);
+                }
+                animate();
+            }
+            
+            // Call all scene creation functions
+            createTinyShellScene();
+            createMathComponentScene();
+            createMallocScene();
+            createKernelOptimizationScene();
+            </script>
 </body>
 </html>
