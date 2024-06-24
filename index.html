@@ -57,59 +57,8 @@
         a:hover {
             text-decoration: underline;
         }
-
-        .project-3d {
-            width: 100%;
-            height: 200px;
-            margin-bottom: 15px;
-            overflow: hidden; /* Add this line */
-        }
-                .project-image {
-            width: 100%;
-            height: 200px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            color: white;
-            text-align: center;
-        }
-
-        .math-component {
-            background-color: #4CAF50; /* Green */
-            background-image: linear-gradient(45deg, #4CAF50 25%, #45a049 25%, #45a049 50%, #4CAF50 50%, #4CAF50 75%, #45a049 75%, #45a049 100%);
-            background-size: 56.57px 56.57px;
-        }
-
-        .tiny-shell {
-            background-color: #2196F3; /* Blue */
-            background-image: repeating-linear-gradient(45deg, #2196F3, #2196F3 10px, #1e87db 10px, #1e87db 20px);
-        }
-
-        .malloc {
-            background-color: #FFC107; /* Yellow */
-            background-image: 
-                linear-gradient(to right, rgba(255,255,255,.1) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-
-        .kernel-optimization {
-            background-color: #FF5722; /* Deep Orange */
-            background-image: 
-                radial-gradient(circle, transparent 20%, #FF5722 20%, #FF5722 80%, transparent 80%, transparent),
-                radial-gradient(circle, transparent 20%, #FF5722 20%, #FF5722 80%, transparent 80%, transparent) 50px 50px;
-            background-size: 100px 100px;
-        }
-
-        .project {
-            /* ... existing styles ... */
-            overflow: hidden; /* Add this line */
-        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -120,33 +69,146 @@
         </div>
         <div class="projects">
             <div class="project">
-                <div class="project-image math-component"</div>
+                <div class="project-3d" id="math-component"></div>
                 <h2>MathComponent</h2>
                 <p><strong>Technologies:</strong> FPrime, C++, VSCode, Flight Software</p>
-                <p>Check out my projects on <a href="https://github.com/reporterfredbriggs" target="_blank">GitHub</a></p>
                 <p>Developed a deployment containing a sender and receiver component which communicate via ports to handle commands, compute simple arithmetic, and send events within the FPrime flight software and embedded systems framework.</p>
             </div>
             <div class="project">
-                <div class="project-image tiny-shell"></div>
+                <div class="project-3d" id="tiny-shell"></div>
                 <h2>Tiny Shell</h2>
                 <p><strong>Technologies:</strong> C, Linux, VSCode</p>
-                <p>Check out my projects on <a href="https://github.com/reporterfredbriggs" target="_blank">GitHub</a></p>
                 <p>Built a UNIX shell with job control in C, including functionality for ctrl-c and ctrl-z keystrokes, foreground and background job delegation.</p>
             </div>
             <div class="project">
-                <div class="project-image malloc"></div>
+                <div class="project-3d" id="malloc"></div>
                 <h2>Malloc - a Dynamic Storage Allocator</h2>
                 <p><strong>Technologies:</strong> C, Linux, VSCode</p>
                 <p>Implemented UNIX-based OS memory allocation (malloc and free) in C, utilizing an explicit doubly linked list alongside an implicit linked list.</p>
             </div>
             <div class="project">
-                <div class="project-image kernel-optimization"></div>
+                <div class="project-3d" id="kernel-optimization"></div>
                 <h2>Kernel Performance Optimization</h2>
                 <p><strong>Technologies:</strong> C, Linux, VSCode</p>
                 <p>Optimized the performance of an application kernel function using loop unrolling, tiling, and a sliding window algorithm to achieve lowest CPE possible.</p>
             </div>
         </div>
     </div>
+    <script>
+        function createScene(elementId, color) {
+            const container = document.getElementById(elementId);
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
     
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshBasicMaterial({ color: color });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+    
+            camera.position.z = 5;
+    
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+    
+        createScene('math-component', 0x00ff00);
+        createScene('tiny-shell', 0xff0000);
+        createScene('malloc', 0x0000ff);
+        createScene('kernel-optimization', 0xffff00);
+    </script>
+    <script>
+        document.querySelectorAll('.project').forEach(project => {
+            const description = project.querySelector('p:last-child');
+            const originalHeight = description.scrollHeight + 'px';
+            description.style.maxHeight = '3em';
+            description.style.overflow = 'hidden';
+            description.style.transition = 'max-height 0.3s ease';
+    
+            project.addEventListener('click', () => {
+                if (description.style.maxHeight === '3em') {
+                    description.style.maxHeight = originalHeight;
+                } else {
+                    description.style.maxHeight = '3em';
+                }
+            });
+        });
+    </script>
+    <script>
+        // ... (keep the createScene function and other project animations)
+        
+        function createTinyShellScene() {
+            const container = document.getElementById('tiny-shell');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+        
+            // Create a "terminal" plane
+            const terminalGeometry = new THREE.PlaneGeometry(10, 7);
+            const terminalMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const terminal = new THREE.Mesh(terminalGeometry, terminalMaterial);
+            scene.add(terminal);
+        
+            // Create text for commands
+            const loader = new THREE.FontLoader();
+            loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
+                const commands = [
+                    "/usr/bin/cat mysplit.c | /usr/bin/grep main",
+                    "/usr/bin/ls /usr/include/gnu | /usr/bin/grep 64",
+                    "jobs",
+                    "./mystop 2",
+                    "./myint 2",
+                    "./bogus",
+                    "./myspin 10",
+                    "fg %1",
+                    "bg %3",
+                    "quit"
+                ];
+        
+                let currentCommandIndex = 0;
+                let textMesh;
+        
+                function displayNextCommand() {
+                    if (currentCommandIndex < commands.length) {
+                        const command = commands[currentCommandIndex];
+                        const textGeometry = new THREE.TextGeometry(command, {
+                            font: font,
+                            size: 0.3,
+                            height: 0.1
+                        });
+                        const textMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                        if (textMesh) scene.remove(textMesh);
+                        textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                        textMesh.position.set(-4.5, 3 - currentCommandIndex * 0.5, 0.1);
+                        scene.add(textMesh);
+                        currentCommandIndex++;
+                    }
+                }
+        
+                // Display a new command every 2 seconds
+                setInterval(displayNextCommand, 2000);
+            });
+        
+            camera.position.z = 5;
+        
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+        
+        createTinyShellScene();
+        // ... (keep other project animations)
+        </script>
 </body>
 </html>
