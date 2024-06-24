@@ -3,49 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nick Baret - Projects</title>
+    <title>Nick Baret - Portfolio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
         }
         h1 {
             color: #0066cc;
+            text-align: center;
+        }
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
         .project {
             background-color: white;
             border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 20px;
             border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .project h2 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        .project-3d {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 15px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <h1>Nick Baret</h1>
-    <p><a href="https://reporterfredbriggs.github.io">reporterfredbriggs.github.io</a></p>
-    
-    <div class="project">
-        <h2>MathComponent</h2>
-        <p>FPrime, C++, VSCode, Flight Software - Developed a deployment containing a sender and receiver component which communicate via ports to handle commands, compute simple arithmetic, and send events within the FPrime flight software and embedded systems framework.</p>
+    <div class="container">
+        <h1>Nick Baret</h1>
+        <div class="intro">
+            <p>Welcome to my portfolio! I'm a software developer specializing in embedded systems and performance optimization.</p>
+            <p><a href="https://reporterfredbriggs.github.io">reporterfredbriggs.github.io</a></p>
+        </div>
+        <div class="projects">
+            <div class="project">
+                <div class="project-3d" id="math-component"></div>
+                <h2>MathComponent</h2>
+                <p><strong>Technologies:</strong> FPrime, C++, VSCode, Flight Software</p>
+                <p>Developed a deployment containing a sender and receiver component which communicate via ports to handle commands, compute simple arithmetic, and send events within the FPrime flight software and embedded systems framework.</p>
+            </div>
+            <div class="project">
+                <div class="project-3d" id="tiny-shell"></div>
+                <h2>Tiny Shell</h2>
+                <p><strong>Technologies:</strong> C, Linux, VSCode</p>
+                <p>Built a UNIX shell with job control in C, including functionality for ctrl-c and ctrl-z keystrokes, foreground and background job delegation.</p>
+            </div>
+            <div class="project">
+                <div class="project-3d" id="malloc"></div>
+                <h2>Malloc - a Dynamic Storage Allocator</h2>
+                <p><strong>Technologies:</strong> C, Linux, VSCode</p>
+                <p>Implemented UNIX-based OS memory allocation (malloc and free) in C, utilizing an explicit doubly linked list alongside an implicit linked list.</p>
+            </div>
+            <div class="project">
+                <div class="project-3d" id="kernel-optimization"></div>
+                <h2>Kernel Performance Optimization</h2>
+                <p><strong>Technologies:</strong> C, Linux, VSCode</p>
+                <p>Optimized the performance of an application kernel function using loop unrolling, tiling, and a sliding window algorithm to achieve lowest CPE possible.</p>
+            </div>
+        </div>
     </div>
-
-    <div class="project">
-        <h2>Tiny Shell</h2>
-        <p>C, Linux, VSCode - Built a UNIX shell with job control in C, including functionality for ctrl-c and ctrl-z keystrokes, foreground and background job delegation.</p>
-    </div>
-
-    <div class="project">
-        <h2>Malloc - a Dynamic Storage Allocator</h2>
-        <p>C, Linux, VSCode - Implemented UNIX-based OS memory allocation (malloc and free) in C, utilizing an explicit doubly linked list alongside an implicit linked list.</p>
-    </div>
-
-    <div class="project">
-        <h2>Kernel Performance Optimization</h2>
-        <p>C, Linux, VSCode - Optimized the performance of an application kernel function using loop unrolling, tiling, and a sliding window algorithm to achieve lowest CPE possible.</p>
-    </div>
+    <script>
+        // 3D animations will be added here
+    </script>
 </body>
 </html>
