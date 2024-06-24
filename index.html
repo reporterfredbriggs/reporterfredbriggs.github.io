@@ -72,12 +72,14 @@
                 <div class="project-3d" id="math-component"></div>
                 <h2>MathComponent</h2>
                 <p><strong>Technologies:</strong> FPrime, C++, VSCode, Flight Software</p>
+                <p>Check out my projects on <a href="https://github.com/reporterfredbriggs" target="_blank">GitHub</a></p>
                 <p>Developed a deployment containing a sender and receiver component which communicate via ports to handle commands, compute simple arithmetic, and send events within the FPrime flight software and embedded systems framework.</p>
             </div>
             <div class="project">
                 <div class="project-3d" id="tiny-shell"></div>
                 <h2>Tiny Shell</h2>
                 <p><strong>Technologies:</strong> C, Linux, VSCode</p>
+                <p>Check out my projects on <a href="https://github.com/reporterfredbriggs" target="_blank">GitHub</a></p>
                 <p>Built a UNIX shell with job control in C, including functionality for ctrl-c and ctrl-z keystrokes, foreground and background job delegation.</p>
             </div>
             <div class="project">
@@ -123,6 +125,23 @@
         createScene('tiny-shell', 0xff0000);
         createScene('malloc', 0x0000ff);
         createScene('kernel-optimization', 0xffff00);
+    </script>
+    <script>
+        document.querySelectorAll('.project').forEach(project => {
+            const description = project.querySelector('p:last-child');
+            const originalHeight = description.scrollHeight + 'px';
+            description.style.maxHeight = '3em';
+            description.style.overflow = 'hidden';
+            description.style.transition = 'max-height 0.3s ease';
+    
+            project.addEventListener('click', () => {
+                if (description.style.maxHeight === '3em') {
+                    description.style.maxHeight = originalHeight;
+                } else {
+                    description.style.maxHeight = '3em';
+                }
+            });
+        });
     </script>
 </body>
 </html>
