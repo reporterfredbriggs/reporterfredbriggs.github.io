@@ -95,7 +95,34 @@
         </div>
     </div>
     <script>
-        // 3D animations will be added here
+        function createScene(elementId, color) {
+            const container = document.getElementById(elementId);
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+    
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshBasicMaterial({ color: color });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+    
+            camera.position.z = 5;
+    
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+    
+        createScene('math-component', 0x00ff00);
+        createScene('tiny-shell', 0xff0000);
+        createScene('malloc', 0x0000ff);
+        createScene('kernel-optimization', 0xffff00);
     </script>
 </body>
 </html>
