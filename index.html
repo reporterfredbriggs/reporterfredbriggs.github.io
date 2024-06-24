@@ -97,56 +97,8 @@
             </div>
         </div>
     </div>
+
     <script>
-        function createScene(elementId, color) {
-            const container = document.getElementById(elementId);
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            container.appendChild(renderer.domElement);
-    
-            const geometry = new THREE.BoxGeometry();
-            const material = new THREE.MeshBasicMaterial({ color: color });
-            const cube = new THREE.Mesh(geometry, material);
-            scene.add(cube);
-    
-            camera.position.z = 5;
-    
-            function animate() {
-                requestAnimationFrame(animate);
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-                renderer.render(scene, camera);
-            }
-            animate();
-        }
-    
-        createScene('math-component', 0x00ff00);
-        createScene('tiny-shell', 0xff0000);
-        createScene('malloc', 0x0000ff);
-        createScene('kernel-optimization', 0xffff00);
-    </script>
-    <script>
-        document.querySelectorAll('.project').forEach(project => {
-            const description = project.querySelector('p:last-child');
-            const originalHeight = description.scrollHeight + 'px';
-            description.style.maxHeight = '3em';
-            description.style.overflow = 'hidden';
-            description.style.transition = 'max-height 0.3s ease';
-    
-            project.addEventListener('click', () => {
-                if (description.style.maxHeight === '3em') {
-                    description.style.maxHeight = originalHeight;
-                } else {
-                    description.style.maxHeight = '3em';
-                }
-            });
-        });
-    </script>
-    <script>
-        // ... (keep the createScene function and other project animations)
-        
         function createTinyShellScene() {
             const container = document.getElementById('tiny-shell');
             const scene = new THREE.Scene();
@@ -209,15 +161,9 @@
             }
             animate();
         }
-        
-        createTinyShellScene();
-        // ... (keep other project animations)
-        </script>
-        <script>
-            // ... (keep the createTinyShellScene function)
-            
-            function createMathComponentScene() {
-                const container = document.getElementById('math-component');
+
+        function createMathComponentScene() {
+            const container = document.getElementById('math-component');
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
                 const renderer = new THREE.WebGLRenderer();
@@ -254,10 +200,10 @@
                     renderer.render(scene, camera);
                 }
                 animate();
-            }
-            
-            function createMallocScene() {
-                const container = document.getElementById('malloc');
+        }
+
+        function createMallocScene() {
+            const container = document.getElementById('malloc');
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
                 const renderer = new THREE.WebGLRenderer();
@@ -290,10 +236,10 @@
                     renderer.render(scene, camera);
                 }
                 animate();
-            }
-            
-            function createKernelOptimizationScene() {
-                const container = document.getElementById('kernel-optimization');
+        }
+
+        function createKernelOptimizationScene() {
+            const container = document.getElementById('kernel-optimization');
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
                 const renderer = new THREE.WebGLRenderer();
@@ -328,13 +274,13 @@
                     renderer.render(scene, camera);
                 }
                 animate();
-            }
-            
-            // Call all scene creation functions
-            createTinyShellScene();
-            createMathComponentScene();
-            createMallocScene();
-            createKernelOptimizationScene();
-            </script>
+        }
+
+        // Call all scene creation functions
+        createTinyShellScene();
+        createMathComponentScene();
+        createMallocScene();
+        createKernelOptimizationScene();
+    </script>
 </body>
 </html>
