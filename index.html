@@ -3,96 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Projects</title>
+    <title>Nick Baret - Projects</title>
     <style>
-        body { margin: 0; font-family: Arial, sans-serif; }
-        canvas { display: block; }
-        .project-info { 
-            position: absolute; 
-            left: 10px; 
-            top: 10px; 
-            background: rgba(0,0,0,0.7);
-            color: white;
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
             padding: 20px;
-            max-width: 300px;
-            display: none;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #0066cc;
+        }
+        .project {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <div id="project-info" class="project-info"></div>
-    <script>
-        let scene, camera, renderer, projects;
+    <h1>Nick Baret</h1>
+    <p><a href="https://reporterfredbriggs.github.io">reporterfredbriggs.github.io</a></p>
+    
+    <div class="project">
+        <h2>MathComponent</h2>
+        <p>FPrime, C++, VSCode, Flight Software - Developed a deployment containing a sender and receiver component which communicate via ports to handle commands, compute simple arithmetic, and send events within the FPrime flight software and embedded systems framework.</p>
+    </div>
 
-        function init() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
+    <div class="project">
+        <h2>Tiny Shell</h2>
+        <p>C, Linux, VSCode - Built a UNIX shell with job control in C, including functionality for ctrl-c and ctrl-z keystrokes, foreground and background job delegation.</p>
+    </div>
 
-            projects = [
-                { name: "MathComponent", position: new THREE.Vector3(-3, 2, -5) },
-                { name: "Tiny Shell", position: new THREE.Vector3(0, 2, -5) },
-                { name: "Malloc", position: new THREE.Vector3(3, 2, -5) },
-                { name: "Kernel Performance Optimization", position: new THREE.Vector3(0, -2, -5) }
-            ];
+    <div class="project">
+        <h2>Malloc - a Dynamic Storage Allocator</h2>
+        <p>C, Linux, VSCode - Implemented UNIX-based OS memory allocation (malloc and free) in C, utilizing an explicit doubly linked list alongside an implicit linked list.</p>
+    </div>
 
-            projects.forEach(project => {
-                const geometry = new THREE.BoxGeometry();
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-                const cube = new THREE.Mesh(geometry, material);
-                cube.position.copy(project.position);
-                cube.userData = { name: project.name };
-                scene.add(cube);
-            });
-
-            camera.position.z = 5;
-
-            window.addEventListener('resize', onWindowResize, false);
-            document.addEventListener('mousemove', onDocumentMouseMove, false);
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            projects.forEach(project => {
-                const cube = scene.getObjectByProperty('userData', { name: project.name });
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-            });
-            renderer.render(scene, camera);
-        }
-
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        function onDocumentMouseMove(event) {
-            event.preventDefault();
-            const mouse = new THREE.Vector2();
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-
-            const raycaster = new THREE.Raycaster();
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(scene.children);
-
-            const projectInfo = document.getElementById('project-info');
-
-            if (intersects.length > 0) {
-                const project = intersects[0].object.userData;
-                projectInfo.innerHTML = `<h2>${project.name}</h2><p>Click to learn more</p>`;
-                projectInfo.style.display = 'block';
-            } else {
-                projectInfo.style.display = 'none';
-            }
-        }
-
-        init();
-        animate();
-    </script>
+    <div class="project">
+        <h2>Kernel Performance Optimization</h2>
+        <p>C, Linux, VSCode - Optimized the performance of an application kernel function using loop unrolling, tiling, and a sliding window algorithm to achieve lowest CPE possible.</p>
+    </div>
 </body>
 </html>
